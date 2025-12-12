@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "locomotive-scroll/dist/locomotive-scroll.min.css";
 
 :root {
   --background: #ffffff;
@@ -19,8 +20,362 @@
   }
 }
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Mobile-friendly touch targets */
+button,
+a {
+  touch-action: manipulation;
+}
+
+/* Prevent text size adjustment on iOS */
+@media screen and (max-width: 768px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+}
+
+/* Improve scrolling on mobile */
+@media (max-width: 768px) {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+/* Locomotive Scroll Styles */
+html.has-scroll-smooth {
+  overflow: hidden;
+}
+
+html.has-scroll-dragging {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.has-scroll-smooth body {
+  overflow: hidden;
+}
+
+.has-scroll-smooth [data-scroll-container] {
+  min-height: 100vh;
+}
+
+[data-scroll-direction="horizontal"] [data-scroll-container] {
+  height: 100vh;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+[data-scroll-direction="horizontal"] [data-scroll-section] {
+  display: inline-block;
+  vertical-align: top;
+  white-space: nowrap;
+  height: 100%;
+}
+
+.c-scrollbar {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 11px;
+  height: 100%;
+  transform-origin: center right;
+  transition: transform 0.3s, opacity 0.3s;
+  opacity: 0;
+}
+
+.c-scrollbar:hover {
+  transform: scaleX(1.45);
+}
+
+.c-scrollbar:hover,
+.has-scroll-scrolling .c-scrollbar,
+.has-scroll-dragging .c-scrollbar {
+  opacity: 1;
+}
+
+.c-scrollbar_thumb {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0.5;
+  width: 7px;
+  border-radius: 10px;
+  margin: 2px;
+  cursor: -webkit-grab;
+  cursor: grab;
+}
+
+.has-scroll-dragging .c-scrollbar_thumb {
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+}
+
+/* Ensure all elements are always visible */
+[data-scroll] {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+html.has-scroll-smooth [data-scroll]:not(.is-inview) {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+html.has-scroll-smooth [data-scroll].is-inview {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Fix layout issues */
+[data-scroll-container] {
+  width: 100%;
+  position: relative;
+  min-height: 100vh;
+}
+
+[data-scroll-section] {
+  width: 100%;
+  position: relative;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Fix header logo visibility */
+.header-logo {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+header {
+  min-height: 64px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+}
+
+@media (min-width: 640px) {
+  header {
+    min-height: 80px;
+  }
+}
+
+/* Ensure main content has proper top margin to account for fixed header */
+main {
+  margin-top: 64px;
+  width: 100%;
+  min-height: calc(100vh - 64px);
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+@media (min-width: 640px) {
+  main {
+    margin-top: 80px;
+    min-height: calc(100vh - 80px);
+  }
+}
+
+/* Ensure sections have proper spacing */
+section {
+  display: block !important;
+  width: 100% !important;
+  position: relative !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  min-height: auto !important;
+}
+
+section > .container {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Ensure all content is visible */
+h1, h2, h3, h4, h5, h6, p, div, span, button, a {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+/* Container spacing - Tailwind v4 responsive */
+.container {
+  width: 100% !important;
+  max-width: 1280px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  display: block;
+  box-sizing: border-box;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+/* Ensure all sections are centered */
+section {
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+section > div {
+  width: 100%;
+}
+
+/* Ensure proper grid alignment */
+.grid {
+  display: grid;
+  align-items: stretch;
+  justify-items: center;
+}
+
+@media (min-width: 640px) {
+  .grid {
+    justify-items: stretch;
+  }
+}
+
+/* Fix flex alignment */
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.items-stretch {
+  align-items: stretch;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+/* Ensure text doesn't break in buttons */
+button {
+  white-space: nowrap;
+  word-break: keep-all;
+  overflow-wrap: normal;
+}
+
+/* Fix card content alignment */
+.card-content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .card-content {
+    align-items: flex-start;
+    text-align: left;
+  }
+}
+
+/* Glow card effect */
+.glow-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.glow-effect {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle at var(--glow-angle, 0deg),
+    rgba(59, 130, 246, 0.1) 0%,
+    rgba(147, 51, 234, 0.1) 50%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  filter: blur(20px);
+}
+
+.glow-card:hover .glow-effect {
+  opacity: 1;
+}
+
+/* Enhanced button styles */
+.cta-button-enhanced {
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-button-enhanced::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -10%;
+  width: 120%;
+  height: 120%;
+  border-radius: 50%;
+  background: rgba(59, 130, 246, 0.1);
+  transform: translateY(-50%) scale(0);
+  transition: transform 0.5s ease;
+}
+
+.cta-button-enhanced:hover::before {
+  transform: translateY(-50%) scale(1);
+  right: 10%;
 }
